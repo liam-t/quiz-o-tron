@@ -1,5 +1,5 @@
 {
-  "name": "create-react-app-ts",
+  "name": "star-wars-typescript",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,9 +7,9 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.47",
     "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
+    "papaparse": "^5.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
@@ -19,7 +19,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "makeData": "ts-node -O '{\"module\": \"commonjs\"}' -e 'import init from \"./src/scripts/convertCsv\"; init()'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +38,8 @@
     ]
   },
   "devDependencies": {
+    "@types/node": "^12.12.47",
+    "@types/papaparse": "^5.0.4",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
     "babel-eslint": "^10.1.0",
@@ -49,6 +52,8 @@
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.4"
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "npm": "^6.14.5",
+    "ts-node": "^8.10.2"
   }
 }
