@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-import { capitalCase } from 'change-case';
+import styled from 'styled-components/macro';
+// import { capitalCase } from 'change-case';
 import Film from 'models/Film';
 
 interface IProps {
@@ -10,8 +10,9 @@ interface IProps {
 const defaultProps = {};
 
 interface Headers {
-  id: string;
-  name: string;
+  id: keyof Film;
+  name: string; // lock this down to film name?
+  formatter?: (input: number) => string;
 }
 
 
@@ -19,10 +20,40 @@ const Table:React.FC<IProps> = ({ data }: IProps) => {
   const [selectedSortingId, setSelectedSortingId] = React.useState('episodeRef');
   const [sortInvert, setSortInvert] = React.useState(true);
 
-  const headers:Headers[] = Object.keys(data[0]).map((key) => ({
-    id: key,
-    name: capitalCase(key),
-  }));
+  // redo this in parent component called StarWarsTable that wraps Table as a generic component
+  const headers:Headers[] = [{
+    id: 'episodeRef',
+    name: 'Episode Ref',
+  }, {
+    id: 'name',
+    name: 'Name',
+  }, {
+    id: 'releaseYear',
+    name: 'Release Year',
+  }, {
+    id: 'director',
+    name: 'Director',
+  }, {
+    id: 'imdb',
+    name: 'Imdb',
+  }, {
+    id: 'rottenToms',
+    name: 'Rotten Toms',
+  }, {
+    id: 'metacritic',
+    name: 'Metacritic',
+  }, {
+    id: 'budget',
+    name: 'Budget',
+  }, {
+    id: 'boxOffice',
+    name: 'Box Office',
+  }, {
+    id: 'ratio',
+    name: 'Ratio',
+    formatter: (val: number): string => String(Math.round((val + Number.EPSILON) * 100) / 100),
+  }];
+  const defaultFormatter = (val: number | string):string => String(val);
 
   const handleHeaderClick = (id: string) => {
     if (selectedSortingId === id) setSortInvert(!sortInvert);
@@ -65,9 +96,13 @@ const Table:React.FC<IProps> = ({ data }: IProps) => {
         <TBody>
           {dataSorted.map((row, i) => (
             <Tr key={row.name}>
-              {Object.entries(row).map(([key, val]) => (
-                <Td key={key}>{val}</Td>
-              ))}
+              {Object.entries(row).map(([key, val], i) => {
+                const activeHeader = headers.find(({ id }) => id === key) || headers[0];
+                const formatter = activeHeader.formatter || defaultFormatter;
+                return (
+                  <Td key={key}>{formatter(val)}</Td>
+                );
+              })}
             </Tr>
           ))}
         </TBody>
@@ -83,6 +118,7 @@ const TableOuter = styled.div`
   font-size: 12px;
 `;
 const TableEl = styled.table`
+  width: 100%;
   border-collapse: collapse;
 `;
 const TBody = styled.tbody``;
@@ -97,4 +133,5 @@ const Th = styled(Td)`
   font-weight: bold;
   user-select: none;
   cursor: pointer;
+  border-top: none;
 `;
