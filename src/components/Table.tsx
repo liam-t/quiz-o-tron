@@ -18,14 +18,17 @@ interface Headers {
 const Table:React.FC<IProps> = ({ data }: IProps) => {
   const [selectedSortingId, setSelectedSortingId] = React.useState('episodeRef');
   const [sortInvert, setSortInvert] = React.useState(true);
+
   const headers:Headers[] = Object.keys(data[0]).map((key) => ({
     id: key,
     name: capitalCase(key),
   }));
+
   const handleHeaderClick = (id: string) => {
     if (selectedSortingId === id) setSortInvert(!sortInvert);
     setSelectedSortingId(id);
   };
+
   const dataSorted = data.sort((a, b) => {
     const metricA = a[selectedSortingId as keyof Film];
     const metricB = b[selectedSortingId as keyof Film];
@@ -35,10 +38,19 @@ const Table:React.FC<IProps> = ({ data }: IProps) => {
     const stringOpFunc = sortInvert
       ? (valA: string, valB: string) => valA.localeCompare(valB)
       : (valA: string, valB: string) => valB.localeCompare(valA);
+    const mixedOpFuncBase = (valA: string | number, valB: string | number) => {
+      if (typeof valA === 'number') return -1;
+      if (typeof valB === 'number') return 1;
+      return 0;
+    };
+    const mixedOpFunc = (valA: string | number, valB: string | number) => (sortInvert
+      ? mixedOpFuncBase(valA, valB)
+      : mixedOpFuncBase(valB, valA));
     if (typeof metricA === 'number' && typeof metricB === 'number') return numberOpFunc(metricA, metricB);
     if (typeof metricA === 'string' && typeof metricB === 'string') return stringOpFunc(metricA, metricB);
-    return -1;
+    return mixedOpFunc(metricA, metricB);
   });
+
   return (
     <TableOuter>
       <TableEl>
