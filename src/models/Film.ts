@@ -1,15 +1,15 @@
 class Film {
   constructor(
-    private episodeRef: string | number,
-    private name: string,
-    private releaseYear: number,
-    private director: string,
-    private imdb: number,
-    private rottenToms: number,
-    private metacritic: number,
-    private budget: number,
-    private boxOffice: number,
-    private ratio: number,
+    public episodeRef: string | number,
+    public name: string,
+    public releaseYear: number,
+    public director: string,
+    public imdb: number,
+    public rottenToms: number,
+    public metacritic: number,
+    public budget: number,
+    public boxOffice: number,
+    public ratio: number,
   ) {}
 }
 export default Film;
