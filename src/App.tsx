@@ -1,12 +1,18 @@
 import React from 'react';
-import Boilerplate from 'components/_BP';
+import Table from 'components/Table';
+import data from 'data/parsed/starwars.json';
+import styled from 'styled-components';
+import GlobalStyles from './GlobalStyles';
+import 'normalize.css';
 
-interface Props {}
 
-const App:React.FC<Props> = () => {
-  return (
-    <Boilerplate />
-  );
-};
+const App:React.FC = () => (
+  <AppWrapper>
+    <GlobalStyles />
+    <Table data={data} />
+  </AppWrapper>
+);
 
 export default App;
+
+const AppWrapper = styled.div``;
