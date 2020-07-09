@@ -1,7 +1,8 @@
 import React from 'react';
 import Table from 'components/Table';
 import data from 'data/parsed/starwars.json';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+import Container from 'components/Container';
 import GlobalStyles from './GlobalStyles';
 import 'normalize.css';
 
@@ -9,7 +10,9 @@ import 'normalize.css';
 const App:React.FC = () => (
   <AppWrapper>
     <GlobalStyles />
-    <Table data={data} />
+    <Container>
+      <Table data={data} />
+    </Container>
   </AppWrapper>
 );
 
