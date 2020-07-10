@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-// import { capitalCase } from 'change-case';
+import numeral from 'numeral';
 import Film from 'models/Film';
 import { getNumeral } from 'helpers';
 
@@ -24,41 +24,50 @@ const Table:React.FC<IProps> = ({ data }: IProps) => {
   // redo this in parent component called StarWarsTable that wraps Table as a generic component
   const headers:Headers[] = [{
     id: 'episodeRef',
-    name: 'Episode Ref',
+    name: 'Episode',
     formatter: (val): string => {
       if (typeof val === 'number') return getNumeral(val);
       return '-';
     },
   }, {
     id: 'name',
-    name: 'Name',
+    name: 'Title',
   }, {
     id: 'releaseYear',
-    name: 'Release Year',
+    name: 'Released',
   }, {
     id: 'director',
     name: 'Director',
   }, {
     id: 'imdb',
-    name: 'Imdb',
+    name: 'Imdb Score',
+    formatter: (n: number): string => (
+      Number.isInteger(n / 10)
+        ? `${n / 10}.0`
+        : `${n / 10}`
+    ),
   }, {
     id: 'rottenToms',
-    name: 'Rotten Toms',
+    name: 'Rotten Toms Score',
+    formatter: (n: number): string => `${n}%`,
   }, {
     id: 'metacritic',
-    name: 'Metacritic',
+    name: 'Metacritic Score',
+    formatter: (n: number): string => `${n}%`,
   }, {
     id: 'budget',
     name: 'Budget',
+    formatter: (n: number): string => numeral(n).format('0,0'),
   }, {
     id: 'boxOffice',
-    name: 'Box Office',
+    name: 'Box Office Takings',
+    formatter: (n: number): string => numeral(n).format('0,0'),
   }, {
     id: 'ratio',
     name: 'Ratio',
-    formatter: (val: number): string => String(Math.round((val + Number.EPSILON) * 100) / 100),
+    formatter: (n: number): string => String(Math.round((n + Number.EPSILON) * 100) / 100),
   }];
-  const defaultFormatter = (val: number | string):string => String(val);
+  const defaultFormatter = (n: number | string):string => String(n);
 
   const handleHeaderClick = (id: string) => {
     if (selectedSortingId === id) setSortInvert(!sortInvert);
