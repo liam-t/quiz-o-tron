@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 // import { capitalCase } from 'change-case';
 import Film from 'models/Film';
+import { getNumeral } from 'helpers';
 
 interface IProps {
   data: Film[];
@@ -24,6 +25,10 @@ const Table:React.FC<IProps> = ({ data }: IProps) => {
   const headers:Headers[] = [{
     id: 'episodeRef',
     name: 'Episode Ref',
+    formatter: (val): string => {
+      if (typeof val === 'number') return getNumeral(val);
+      return '-';
+    },
   }, {
     id: 'name',
     name: 'Name',
