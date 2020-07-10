@@ -57,11 +57,11 @@ const Table:React.FC<IProps> = ({ data }: IProps) => {
   }, {
     id: 'budget',
     name: 'Budget',
-    formatter: (n: number): string => numeral(n).format('0,0'),
+    formatter: (n: number): string => numeral(n).format('$0,0'),
   }, {
     id: 'boxOffice',
     name: 'Box Office Takings',
-    formatter: (n: number): string => numeral(n).format('0,0'),
+    formatter: (n: number): string => numeral(n).format('$0,0'),
   }, {
     id: 'ratio',
     name: 'Ratio',
