@@ -1,72 +1,20 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import numeral from 'numeral';
 import Film from 'models/Film';
-import { getNumeral } from 'helpers';
+import { Header } from 'types';
 
 interface IProps {
-  data: Film[];
+  data: Film[]; // this needs to be generic
+  headers: Header[];
 }
 
 const defaultProps = {};
 
-interface Headers {
-  id: keyof Film;
-  name: string; // lock this down to film name?
-  formatter?: (input: number) => string;
-}
 
-
-const Table:React.FC<IProps> = ({ data }: IProps) => {
+const Table:React.FC<IProps> = ({ data, headers }: IProps) => {
   const [selectedSortingId, setSelectedSortingId] = React.useState('episodeRef');
   const [sortInvert, setSortInvert] = React.useState(true);
 
-  // redo this in parent component called StarWarsTable that wraps Table as a generic component
-  const headers:Headers[] = [{
-    id: 'episodeRef',
-    name: 'Episode',
-    formatter: (val): string => {
-      if (typeof val === 'number') return getNumeral(val);
-      return '-';
-    },
-  }, {
-    id: 'name',
-    name: 'Title',
-  }, {
-    id: 'releaseYear',
-    name: 'Released',
-  }, {
-    id: 'director',
-    name: 'Director',
-  }, {
-    id: 'imdb',
-    name: 'Imdb Score',
-    formatter: (n: number): string => (
-      Number.isInteger(n / 10)
-        ? `${n / 10}.0`
-        : `${n / 10}`
-    ),
-  }, {
-    id: 'rottenToms',
-    name: 'Rotten Toms Score',
-    formatter: (n: number): string => `${n}%`,
-  }, {
-    id: 'metacritic',
-    name: 'Metacritic Score',
-    formatter: (n: number): string => `${n}%`,
-  }, {
-    id: 'budget',
-    name: 'Budget',
-    formatter: (n: number): string => numeral(n).format('$0,0'),
-  }, {
-    id: 'boxOffice',
-    name: 'Box Office Takings',
-    formatter: (n: number): string => numeral(n).format('$0,0'),
-  }, {
-    id: 'ratio',
-    name: 'Ratio',
-    formatter: (n: number): string => String(Math.round((n + Number.EPSILON) * 100) / 100),
-  }];
   const defaultFormatter = (n: number | string):string => String(n);
 
   const handleHeaderClick = (id: string) => {
@@ -108,9 +56,9 @@ const Table:React.FC<IProps> = ({ data }: IProps) => {
         </THead>
 
         <TBody>
-          {dataSorted.map((row, i) => (
+          {dataSorted.map((row) => (
             <Tr key={row.name}>
-              {Object.entries(row).map(([key, val], i) => {
+              {Object.entries(row).map(([key, val]) => {
                 const activeHeader = headers.find(({ id }) => id === key) || headers[0];
                 const formatter = activeHeader.formatter || defaultFormatter;
                 return (
