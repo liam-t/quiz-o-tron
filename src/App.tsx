@@ -1,6 +1,4 @@
 import React from 'react';
-import StarWarsTable from 'components/StarWarsTable';
-import data from 'data/parsed/starwars.json';
 import styled from 'styled-components/macro';
 import Container from 'components/Container';
 import GlobalStyles from './GlobalStyles';
@@ -11,7 +9,7 @@ const App:React.FC = () => (
   <AppWrapper>
     <GlobalStyles />
     <Container>
-      <StarWarsTable data={data} />
+      hi
     </Container>
   </AppWrapper>
 );

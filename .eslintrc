@@ -12,6 +12,7 @@
   },
   "rules": {
     "@typescript-eslint/lines-between-class-members": 0,
-    "no-multiple-empty-lines": [1, { "max": 2 }]
+    "no-multiple-empty-lines": [1, { "max": 2 }],
+    "import/prefer-default-export": 0
   }
 }
