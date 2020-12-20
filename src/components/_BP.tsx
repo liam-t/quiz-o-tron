@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-interface IProps {}
+interface Props {}
 const defaultProps = {};
 
 
-const Boilerplate:React.FC<IProps> = ({}: IProps) => (
+const Boilerplate:React.FC<Props> = ({}) => (
   <BoilerplateOuter>
     hi
   </BoilerplateOuter>
