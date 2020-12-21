@@ -3,15 +3,13 @@ import styled from 'styled-components';
 
 
 interface Props {}
-const defaultProps = {};
 
 
 const Boilerplate:React.FC<Props> = ({}) => (
   <BoilerplateOuter>
-    hi
+    Hi, I&apos;m Boilerplate!
   </BoilerplateOuter>
 );
-Boilerplate.defaultProps = defaultProps;
 export default Boilerplate;
 
 
