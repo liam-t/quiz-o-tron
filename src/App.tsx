@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import Container from 'components/Container';
 import Quiz from 'components/Quiz';
+import FlexHeightElement from 'components/FlexHeightElement';
 import data from './assets/data/dummyData.json';
 import GlobalStyles from './GlobalStyles';
 import 'normalize.css';
@@ -13,7 +14,7 @@ import 'normalize.css';
 const App:React.FC = () => (
   <AppWrapper>
     <GlobalStyles />
-    <Container>
+    <Container flexHeight>
       <Quiz data={data} />
     </Container>
   </AppWrapper>
@@ -21,4 +22,4 @@ const App:React.FC = () => (
 
 export default App;
 
-const AppWrapper = styled.div``;
+const AppWrapper = styled(FlexHeightElement)``;
