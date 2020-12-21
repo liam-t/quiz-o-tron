@@ -9,14 +9,17 @@ interface Props {
 const defaultProps = {};
 
 
-const Question:React.FC<Props> = ({ data }) => (
-  <QuestionOuter>
-    Q: {data.questionText}
-    <Img src={data.imageUrl} />
-    A: {data.answerText}
-    <hr />
-  </QuestionOuter>
-);
+const Question:React.FC<Props> = ({ data }) => {
+  const [answerIsVisible, setAnswerIsVisible] = React.useState(false);
+  return (
+    <QuestionOuter>
+      Q: {data.questionText}
+      {data.imageUrl && <Img src={data.imageUrl} />}
+      {answerIsVisible && `A: ${data.answerText}`}
+      <hr />
+    </QuestionOuter>
+  );
+};
 Question.defaultProps = defaultProps;
 export default Question;
 
