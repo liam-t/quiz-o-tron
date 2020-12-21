@@ -1,26 +1,35 @@
 import React from 'react';
-import styled from 'styled-components/macro';
-
+import styled, { css, StyledComponent } from 'styled-components/macro';
+import FlexHeightElement from 'components/FlexHeightElement';
 
 interface IProps {
-  children: React.ReactChild;
+  flexHeight?: boolean,
 }
-const defaultProps = {};
 
 
-const Container:React.FC<IProps> = ({ children }: IProps) => (
-  <ContainerOuter>
-    {children}
-  </ContainerOuter>
-);
-Container.defaultProps = defaultProps;
+const Container:React.FC<IProps> = ({
+  children,
+  flexHeight = false,
+}) => {
+  const Wrap = flexHeight
+    ? ContainerOuterFlexHeight as StyledComponent<'div', any>
+    : ContainerOuter;
+  return (
+    <Wrap>{children}</Wrap>
+  );
+};
 export default Container;
 
-
-const ContainerOuter = styled.div`
+const sharedCss = css`
   box-sizing: border-box;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+`;
+const ContainerOuter = styled.div`
+  ${sharedCss};
+`;
+const ContainerOuterFlexHeight = styled(FlexHeightElement)`
+  ${sharedCss};
 `;
