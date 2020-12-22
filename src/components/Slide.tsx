@@ -1,51 +1,54 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled, { keyframes } from 'styled-components/macro';
 import FlexHeightElement from 'components/FlexHeightElement';
+import Img from 'components/Img';
 
 interface Props {
   title: string,
-  description?: string,
+  copy?: string,
   image?: string,
   onClick: () => void,
 }
 const defaultProps = {};
 
 
-const RoundTitleScreen:React.FC<Props> = ({
+const Slide:React.FC<Props> = ({
   title,
-  description,
+  copy,
   image,
   onClick,
 }) => (
-  <RoundTitleScreenOuter onClick={onClick}>
-    {image && <Img url={image} />}
+  <SlideOuter onClick={onClick}>
+    {image && <ImgStyled src={image} key={image} />}
     <Content>
       <Title>{title}</Title>
-      {description && <Description>{description}</Description>}
+      {copy && <Description>{copy}</Description>}
     </Content>
-  </RoundTitleScreenOuter>
+  </SlideOuter>
 );
-RoundTitleScreen.defaultProps = defaultProps;
-export default RoundTitleScreen;
+Slide.defaultProps = defaultProps;
+export default Slide;
 
 
-const RoundTitleScreenOuter = styled(FlexHeightElement)`
+const SlideOuter = styled(FlexHeightElement)`
   position: relative;
   justify-content: center;
   align-items: center;
 `;
-const Img = styled.div<{ url: string }>`
+const ImgStyled = styled(Img)`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center center;
   flex: 1 0 auto;
   min-height: 300px;
-  background-image: url(${(p) => p.url});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  animation: ${keyframes`
+    from { opacity: 0 }
+    to { opacity: 1 }
+  `} 300ms both;
   &:after {
     content: '';
     position: absolute;
@@ -66,11 +69,11 @@ const Content = styled.div`
 const Title = styled.h1`
   text-transform: uppercase;
   font-size: 3rem;
-  margin: 0 0 0.5em;
+  margin: 0;
   text-shadow: 0 0 2em rgba(0, 0, 0, 0.4);
 `;
 const Description = styled.p`
-  margin: 0;
+  margin: 0.5em 0 0;
   max-width: 40em;
   margin: 0 auto;
 `;
