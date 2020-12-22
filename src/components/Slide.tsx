@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import FlexHeightElement from 'components/FlexHeightElement';
 import Img from 'components/Img';
 
@@ -45,19 +45,6 @@ const ImgStyled = styled(Img)`
   object-position: center center;
   flex: 1 0 auto;
   min-height: 300px;
-  animation: ${keyframes`
-    from { opacity: 0 }
-    to { opacity: 1 }
-  `} 300ms both;
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-  }
 `;
 const Content = styled.div`
   position: relative;
@@ -70,7 +57,7 @@ const Title = styled.h1`
   text-transform: uppercase;
   font-size: 3rem;
   margin: 0;
-  text-shadow: 0 0 2em rgba(0, 0, 0, 0.4);
+  /* text-shadow: 0 0 2em rgba(0, 0, 0, 0.4); */
 `;
 const Description = styled.p`
   margin: 0.5em 0 0;

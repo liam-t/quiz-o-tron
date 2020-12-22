@@ -1,6 +1,5 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { PuffLoader as Loader } from 'react-spinners';
-import { useImage } from 'react-image';
 import styled, { keyframes } from 'styled-components/macro';
 
 
@@ -14,22 +13,53 @@ const Img: React.FC<Props> = ({
   src: srcProp,
   className,
 }) => {
-  const { src } = useImage({ srcList: srcProp });
-  return (
-    <div className={className}>
-      <ImgElement src={src} alt="" className={className} />
-    </div>
-  );
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    const preloadedImg = new Image();
+    preloadedImg.src = srcProp;
+    const handler = (e: Event): void => setIsLoaded(true);
+    preloadedImg.addEventListener('load', handler);
+    return () => preloadedImg.removeEventListener('load', handler);
+  }, [srcProp]);
+
+  if (!isLoaded) {
+    return (
+      <FallbackElement>
+        <Loader />
+      </FallbackElement>
+    );
+  } else {
+    return (
+      <Wrap>
+        <ImgElement
+          src={srcProp}
+          className={className}
+          alt=""
+        />
+        <Flat />
+      </Wrap>
+    );
+  }
 };
+export default Img;
 
-const WithSuspense: React.FC<Props> = (props) => (
-  <Suspense fallback={<FallbackElement><Loader /></FallbackElement>}><Img {...props} /></Suspense>
-);
+const Wrap = styled.div`
+  animation: ${keyframes`
+    from { opacity: 0 }
+    to { opacity: 1 }
+  `} 500ms 200ms both;
+`;
 
-export default WithSuspense;
+const ImgElement = styled.img``;
 
-const ImgElement = styled.img`
-  max-width: 100%;
+const Flat = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 const FallbackElement = styled.div`
