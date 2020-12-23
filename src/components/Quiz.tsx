@@ -18,12 +18,10 @@ interface Props {
 
 const Quiz:React.FC<Props> = ({ data }) => {
   const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
-  const [quizComplete, setQuizComplete] = React.useState(false);
 
   function goNextSlide() {
     const isLastSlide = activeSlideIndex + 1 === allSlides.length;
     if (!isLastSlide) setActiveSlideIndex((oldIndex) => oldIndex + 1);
-    else setQuizComplete(true);
   }
 
   function goPrevSlide() {
@@ -39,8 +37,21 @@ const Quiz:React.FC<Props> = ({ data }) => {
     });
     return slides;
   };
+
   const firstSlide = new SlideModel(data.name, 'start', undefined, data.imageUrl);
-  const allSlides = data.rounds.reduce(slideReducer, [firstSlide]);
+  const lastSlide = new SlideModel(
+    'Quiz complete!',
+    'end',
+    'You live to fight another day comrades, well done!',
+    'https://picsum.photos/seed/cNmVRnREljYWb/1200/1200',
+  );
+  const roundSlides = data.rounds.reduce(slideReducer, []);
+  const allSlides = [
+    firstSlide,
+    ...roundSlides,
+    lastSlide,
+  ];
+
   const activeSlideData = allSlides[activeSlideIndex];
   const handleSlideClick = () => goNextSlide();
   const handleKeyboardKeyDown = (key: string): void => {
@@ -55,39 +66,22 @@ const Quiz:React.FC<Props> = ({ data }) => {
       Backspace: goPrevSlide,
     };
 
-    if (key in actionMap) {
-      if (quizComplete && actionMap[key].name === 'goPrevSlide') {
-        setQuizComplete(false);
-      } else {
-        actionMap[key]();
-      }
-    }
+    if (key in actionMap) actionMap[key]();
   };
 
   return (
     <QuizOuter>
       <KeyboardHandler onKeyDown={handleKeyboardKeyDown} />
-      {!quizComplete ? (
-        <Slide
-          title={activeSlideData.title}
-          copy={activeSlideData.copy}
-          imageUrl={activeSlideData.imageUrl}
-          slideType={activeSlideData.slideType}
-          onClick={handleSlideClick}
-        />
-      ) : (
-        <Slide
-          title="Quiz complete!"
-          copy="You live to fight another day comrades, well done!"
-          imageUrl="https://picsum.photos/seed/cNmVRnREljYWb/1200/1200"
-          slideType="end"
-          onClick={handleSlideClick}
-        />
-      )}
+      <Slide
+        title={activeSlideData.title}
+        copy={activeSlideData.copy}
+        imageUrl={activeSlideData.imageUrl}
+        slideType={activeSlideData.slideType}
+        onClick={handleSlideClick}
+      />
       <QuizProgressOverlays
         activeSlideIndex={activeSlideIndex}
         slides={allSlides}
-        quizComplete={quizComplete}
       />
     </QuizOuter>
   );
