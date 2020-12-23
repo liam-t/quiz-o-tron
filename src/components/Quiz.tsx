@@ -30,7 +30,7 @@ const Quiz:React.FC<Props> = ({ data }) => {
   }
 
   const slideReducer = (slides: SlideModel[], round: RoundModel): SlideModel[] => {
-    slides.push(new SlideModel(round.name, 'start', round.description, round.imageUrl));
+    slides.push(new SlideModel(round.name, 'round', round.description, round.imageUrl));
     round.questions.forEach((question: QuestionModel, i) => {
       slides.push(new SlideModel(`Question ${i + 1}:`, 'question', question.questionText, question.imageUrl));
       slides.push(new SlideModel('Answer:', 'answer', question.answerText, question.imageUrl));
