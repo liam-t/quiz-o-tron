@@ -2,11 +2,9 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import FlexHeightElement from 'components/FlexHeightElement';
 import Img from 'components/Img';
+import { Slide as SlideModel } from 'models';
 
-interface Props {
-  title: string,
-  copy?: string,
-  image?: string,
+interface Props extends SlideModel {
   onClick: () => void,
 }
 const defaultProps = {};
@@ -15,11 +13,11 @@ const defaultProps = {};
 const Slide:React.FC<Props> = ({
   title,
   copy,
-  image,
+  imageUrl,
   onClick,
 }) => (
   <SlideOuter onClick={onClick}>
-    {image && <ImgStyled src={image} key={image} />}
+    {imageUrl && <ImgStyled src={imageUrl} key={imageUrl} />}
     <Content>
       <Title>{title}</Title>
       {copy && <Description>{copy}</Description>}
