@@ -48,7 +48,7 @@ const Wrap = styled.div`
   animation: ${keyframes`
     from { opacity: 0 }
     to { opacity: 1 }
-  `} 500ms 200ms both;
+  `} 300ms 100ms both;
 `;
 
 const ImgElement = styled.img``;
@@ -59,7 +59,7 @@ const Flat = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.4);
 `;
 
 const FallbackElement = styled.div`
