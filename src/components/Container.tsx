@@ -12,7 +12,7 @@ const Container:React.FC<IProps> = ({
   flexHeight = false,
 }) => {
   const Wrap = flexHeight
-    ? ContainerOuterFlexHeight as StyledComponent<'div', any>
+    ? ContainerOuterFlexHeight as StyledComponent<'div', any> /* eslint-disable-line */
     : ContainerOuter;
   return (
     <Wrap>{children}</Wrap>
