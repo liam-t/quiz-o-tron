@@ -6,11 +6,10 @@ import { Slide as SlideModel } from 'models';
 interface Props {
   activeSlideIndex: number,
   slides: SlideModel[],
-  quizComplete: boolean,
 }
 
 
-const QuizProgressOverlays:React.FC<Props> = ({ activeSlideIndex, slides, quizComplete }) => {
+const QuizProgressOverlays:React.FC<Props> = ({ activeSlideIndex, slides }) => {
   const currentSlide = null;
   return (
     <QuizProgressOverlaysOuter>
