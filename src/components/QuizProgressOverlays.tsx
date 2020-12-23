@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Slide as SlideModel } from 'models';
-import { SlideTypes } from 'types';
 
 interface Props {
   activeSlideIndex: number,
