@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Slide as SlideModel } from 'models';
 
+
+type TallyObj = { round: number, question: number };
 interface Props {
   activeSlideIndex: number,
   slides: SlideModel[],
@@ -9,7 +11,6 @@ interface Props {
 
 
 const QuizProgressOverlays:React.FC<Props> = ({ activeSlideIndex, slides }) => {
-  type TallyObj = { round: number, question: number };
   const reducer = (acc: TallyObj, item: SlideModel): TallyObj => {
     if (item.slideType === 'round') {
       acc.round += 1;
@@ -23,13 +24,15 @@ const QuizProgressOverlays:React.FC<Props> = ({ activeSlideIndex, slides }) => {
     round: 0,
     question: 0,
   });
-  const isLastSlide = activeSlideIndex === slides.length - 1;
-  const showQuestionNumber = !!(tally.question) && !isLastSlide;
-  const showRoundNumber = !!(tally.round) && !isLastSlide;
+
+  const currentSlideType = slides[activeSlideIndex].slideType;
+  const showOverlays = currentSlideType === 'answer' || currentSlideType === 'question';
+  if (!showOverlays) return null;
+
   return (
     <QuizProgressOverlaysOuter>
-      {showQuestionNumber && <QuestionNumber>Question {tally.question}</QuestionNumber>}
-      {showRoundNumber && <RoundNumber>Round {tally.round}</RoundNumber>}
+      <QuestionNumber>Question {tally.question}</QuestionNumber>
+      <RoundNumber>Round {tally.round}</RoundNumber>
     </QuizProgressOverlaysOuter>
   );
 };
