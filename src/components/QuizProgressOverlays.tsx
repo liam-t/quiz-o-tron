@@ -3,7 +3,6 @@ import styled from 'styled-components/macro';
 import { Slide as SlideModel } from 'models';
 
 
-type TallyObj = { round: number, question: number };
 interface Props {
   activeSlideIndex: number,
   slides: SlideModel[],
@@ -11,6 +10,7 @@ interface Props {
 
 
 const QuizProgressOverlays:React.FC<Props> = ({ activeSlideIndex, slides }) => {
+  type TallyObj = { round: number, question: number };
   const reducer = (acc: TallyObj, item: SlideModel): TallyObj => {
     if (item.slideType === 'round') {
       acc.round += 1;
