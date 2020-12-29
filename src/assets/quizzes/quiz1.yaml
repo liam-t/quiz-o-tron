@@ -1,0 +1,27 @@
+quizTitle: This is my quiz!
+image: https://picsum.photos/seed/MNcTLvthHAdt/1200/1200
+rounds:
+  - name: Dumb Questions Round
+    image: https://picsum.photos/seed/MNcTLvthHAdt/1200/1200
+    questions:
+      - text: What is the capital of Peru
+        answer: Lima
+        image: https://picsum.photos/seed/MNcTLvthHAdt/1200/1200
+      - text: What is moo?
+        answer: Bar
+        image: https://picsum.photos/seed/MNcTLvthHAdt/1200/1200
+      - text: Why?
+        answer: Because
+        image: https://picsum.photos/seed/MNcTLvthHAdt/1200/1200
+  - name: Round 2
+    image: https://picsum.photos/seed/MNcTLvthHAdt/1200/1200
+    quesions:
+      - text: How much wood would a wood-chuck chuck if he was able to do that?
+        answer: As much as he could
+        image: https://picsum.photos/seed/MNcTLvthHAdt/1200/1200
+      - text: What is the best way to cook potatoes?
+        answer: Roast them
+        image: https://picsum.photos/seed/MNcTLvthHAdt/1200/1200
+      - text: How much dummy data is enough?
+        answer: This much!
+        image: https://picsum.photos/seed/MNcTLvthHAdt/1200/1200
