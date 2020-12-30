@@ -15,21 +15,49 @@ interface Props {
 }
 
 
-const QuizInput:React.FC<Props> = ({ onChange }) => {
+const QuizInput:React.FC<Props> = ({ onChange: onChangeProp }) => {
+  const [textAreaContent, setTextAreaContent] = React.useState('boo');
   React.useEffect(() => {
     async function fetchData() {
       const res = await window.fetch(markdownTest);
       const text = await res.text();
-      const htmlString = getCleanHtmlFromMarkdown(text);
-      const htmlElement = htmlToElement(htmlString);
-      const theQuiz = getQuizJson(htmlElement);
-      onChange(theQuiz);
+      setTextAreaContent(text);
     }
     void fetchData(); // eslint-disable-line no-void
-  }, [onChange]);
+  }, []);
+
+  // todo: error handling and user feedback
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    const htmlString = getCleanHtmlFromMarkdown(textAreaContent);
+    const htmlElement = htmlToElement(htmlString);
+    const theQuiz = getQuizJson(htmlElement);
+    onChangeProp(theQuiz);
+  };
+
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    const { value } = e.target;
+    setTextAreaContent(value);
+  };
 
   return (
-    <QuizInputOuter>QuizInput - UI pending</QuizInputOuter>
+    <QuizInputOuter>
+      <Form forwardedAs="form" onSubmit={handleSubmit}>
+        {/* todo: syntax highlighting */}
+        <Textarea
+          forwardedAs="textarea"
+          autoComplete="off"
+          autoFocus
+          cols={40}
+          rows={20}
+          value={textAreaContent}
+          onChange={handleTextareaChange}
+        />
+        <SaveBtnWrap>
+          <SaveBtn type="submit" value="Save" />
+        </SaveBtnWrap>
+      </Form>
+    </QuizInputOuter>
   );
 };
 export default QuizInput;
@@ -38,5 +66,19 @@ export default QuizInput;
 const QuizInputOuter = styled(FlexHeightElement)`
   box-sizing: border-box;
   padding: 20px;
-  background-color: #ccefff;
+`;
+const Form = styled(FlexHeightElement)``;
+const Textarea = styled(FlexHeightElement)`
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+`;
+const SaveBtnWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+const SaveBtn = styled.input`
+  display: block;
+  padding: 0.4em 1em;
+  font-size: 1.4rem;
 `;
