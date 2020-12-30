@@ -29,7 +29,9 @@ const Quiz:React.FC<Props> = ({ data }) => {
 
   function goPrevSlide() {
     const isFirstSlide = activeSlideIndex === 0;
-    if (!isFirstSlide) routerHistory.push(`/slide/${activeSlideIndex - 1}`);
+    const isSecondSlide = activeSlideIndex === 1;
+    if (isSecondSlide) routerHistory.push('/');
+    else if (!isFirstSlide) routerHistory.push(`/slide/${activeSlideIndex - 1}`);
   }
 
   const slideReducer = (slides: SlideModel[], round: RoundModel): SlideModel[] => {
