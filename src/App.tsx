@@ -31,7 +31,7 @@ const App:React.FC = () => {
             <Route exact path="/input">
               <QuizInput onChange={memoizedHandleQuizInputChange} />
             </Route>
-            <Route>
+            <Route path={['/slide/:activeSlideIndex', '/']}>
               <Quiz data={quizData} />
             </Route>
           </Switch>

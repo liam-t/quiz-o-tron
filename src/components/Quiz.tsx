@@ -10,6 +10,7 @@ import FlexHeightElement from 'components/FlexHeightElement';
 import Slide from 'components/Slide';
 import KeyboardHandler from 'components/KeyboardHandler';
 import QuizProgressOverlays from 'components/QuizProgressOverlays';
+import { useParams, useHistory } from 'react-router-dom';
 
 interface Props {
   data: QuizModel,
@@ -17,16 +18,18 @@ interface Props {
 
 
 const Quiz:React.FC<Props> = ({ data }) => {
-  const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
+  const { activeSlideIndex: activeSlideIndexRaw = '0' } = useParams<{ activeSlideIndex: string }>();
+  const activeSlideIndex = Number(activeSlideIndexRaw);
+  const routerHistory = useHistory();
 
   function goNextSlide() {
     const isLastSlide = activeSlideIndex + 1 === allSlides.length;
-    if (!isLastSlide) setActiveSlideIndex((oldIndex) => oldIndex + 1);
+    if (!isLastSlide) routerHistory.push(`/slide/${activeSlideIndex + 1}`);
   }
 
   function goPrevSlide() {
     const isFirstSlide = activeSlideIndex === 0;
-    if (!isFirstSlide) setActiveSlideIndex((oldIndex) => oldIndex - 1);
+    if (!isFirstSlide) routerHistory.push(`/slide/${activeSlideIndex - 1}`);
   }
 
   const slideReducer = (slides: SlideModel[], round: RoundModel): SlideModel[] => {
