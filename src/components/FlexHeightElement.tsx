@@ -5,11 +5,18 @@ import styled from 'styled-components/macro';
 interface Props {
   className?: string,
   onClick?: () => void,
+  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>,
 }
 
 
-const FlexHeightElement:React.FC<Props> = ({ children, className, onClick }) => (
-  <FlexHeightElementOuter className={className} onClick={onClick}>
+const FlexHeightElement:React.FC<Props> = ({
+  children,
+  className,
+  onClick,
+  as,
+  ...rest
+}) => (
+  <FlexHeightElementOuter as={as} className={className} onClick={onClick} {...rest}>
     {children}
   </FlexHeightElementOuter>
 );
