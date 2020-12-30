@@ -32,6 +32,7 @@ const SlideOuter = styled(FlexHeightElement)`
   position: relative;
   justify-content: center;
   align-items: center;
+  user-select: none;
 `;
 const ImgStyled = styled(Img)`
   position: absolute;
