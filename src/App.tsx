@@ -4,6 +4,7 @@ import Container from 'components/Container';
 import Quiz from 'components/Quiz';
 import FlexHeightElement from 'components/FlexHeightElement';
 import QuizInput from 'components/QuizInput';
+import Nav from 'components/Nav';
 import {
   HashRouter as Router,
   Switch,
@@ -24,18 +25,17 @@ const App:React.FC = () => {
     <Router>
       <AppWrapper>
         <GlobalStyles />
-        <Container flexHeight>
-          <Link to="/">home</Link>
-          <Link to="/input">input</Link>
-          <Switch>
-            <Route exact path="/input">
-              <QuizInput onChange={memoizedHandleQuizInputChange} />
-            </Route>
-            <Route path={['/slide/:activeSlideIndex', '/']}>
+        <Nav />
+        <Switch>
+          <Route exact path="/input">
+            <QuizInput onChange={memoizedHandleQuizInputChange} />
+          </Route>
+          <Route path={['/slide/:activeSlideIndex', '/']}>
+            <Container flexHeight>
               <Quiz data={quizData} />
-            </Route>
-          </Switch>
-        </Container>
+            </Container>
+          </Route>
+        </Switch>
       </AppWrapper>
     </Router>
   );
