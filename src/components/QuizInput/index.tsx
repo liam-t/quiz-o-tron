@@ -3,6 +3,8 @@ import styled from 'styled-components/macro';
 import FlexHeightElement from 'components/FlexHeightElement';
 import { Quiz as QuizModel } from 'models';
 import markdownTest from 'assets/quizzes/quiz1.md';
+import MDEditor from '@uiw/react-md-editor';
+import { withResizeDetector } from 'react-resize-detector';
 import {
   getCleanHtmlFromMarkdown,
   htmlToElement,
@@ -12,11 +14,17 @@ import {
 
 interface Props {
   onChange: (dataReturn: QuizModel) => void,
+  height?: number,
+  targetRef?: React.Ref<HTMLDivElement>,
 }
 
 
-const QuizInput:React.FC<Props> = ({ onChange: onChangeProp }) => {
-  const [textAreaContent, setTextAreaContent] = React.useState('boo');
+const QuizInput:React.FC<Props> = ({
+  onChange: onChangeProp,
+  height,
+  targetRef,
+}) => {
+  const [textAreaContent, setTextAreaContent] = React.useState('');
   React.useEffect(() => {
     async function fetchData() {
       const res = await window.fetch(markdownTest);
@@ -35,24 +43,25 @@ const QuizInput:React.FC<Props> = ({ onChange: onChangeProp }) => {
     onChangeProp(theQuiz);
   };
 
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    const { value } = e.target;
-    setTextAreaContent(value);
+  const handleTextareaChange = (val: string | undefined): void => {
+    setTextAreaContent(val || '');
   };
 
   return (
     <QuizInputOuter>
       <Form forwardedAs="form" onSubmit={handleSubmit}>
-        {/* todo: syntax highlighting */}
-        <Textarea
-          forwardedAs="textarea"
-          autoComplete="off"
-          autoFocus
-          cols={40}
-          rows={20}
-          value={textAreaContent}
-          onChange={handleTextareaChange}
-        />
+        <EditorWrapOuter>
+          <EditorWrap ref={targetRef}>
+            <MDEditorStyled
+              autoFocus
+              value={textAreaContent}
+              onChange={handleTextareaChange}
+              height={height}
+              visiableDragbar={false}
+              preview="edit"
+            />
+          </EditorWrap>
+        </EditorWrapOuter>
         <SaveBtnWrap>
           <SaveBtn type="submit" value="Save" />
         </SaveBtnWrap>
@@ -60,18 +69,34 @@ const QuizInput:React.FC<Props> = ({ onChange: onChangeProp }) => {
     </QuizInputOuter>
   );
 };
-export default QuizInput;
+export default withResizeDetector<Props>(QuizInput);
 
 
 const QuizInputOuter = styled(FlexHeightElement)`
   box-sizing: border-box;
   padding: 20px;
+  background-color: #eee;
+  @media (min-width: 400px) {
+    padding: 40px;
+  }
 `;
 const Form = styled(FlexHeightElement)``;
-const Textarea = styled(FlexHeightElement)`
+const EditorWrapOuter = styled(FlexHeightElement)`
+  position: relative;
+  margin-bottom: 10px;
+`;
+const EditorWrap = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 20px;
+  height: 100%;
+`;
+
+const MDEditorStyled = styled(MDEditor)`
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
 `;
 const SaveBtnWrap = styled.div`
   display: flex;
@@ -81,4 +106,11 @@ const SaveBtn = styled.input`
   display: block;
   padding: 0.4em 1em;
   font-size: 1.4rem;
+  /* background-color: skyblue; */
+  background-color: #fff;
+  font-weight: bold;
+  color: #444;
+  border: 1px solid #aaa;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 `;
