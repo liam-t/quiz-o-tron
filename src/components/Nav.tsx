@@ -30,7 +30,7 @@ export default Nav;
 
 const NavOuter = styled.nav`
   position: fixed;
-  top: 30px;
+  top: 40px;
   left: 0;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
