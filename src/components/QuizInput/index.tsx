@@ -80,7 +80,7 @@ const QuizInputOuter = styled(FlexHeightElement)`
     padding: 40px;
   }
 `;
-const Form = styled(FlexHeightElement)``;
+const Form = styled(FlexHeightElement)<{ onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }>``;
 const EditorWrapOuter = styled(FlexHeightElement)`
   position: relative;
   margin-bottom: 10px;
