@@ -9,7 +9,6 @@ import {
   HashRouter as Router,
   Switch,
   Route,
-  Link,
 } from 'react-router-dom';
 import { Quiz as QuizModel } from 'models';
 import data from './assets/data/dummyData.json';
